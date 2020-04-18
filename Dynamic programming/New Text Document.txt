@@ -1,0 +1,50 @@
+/*
+Following code is used to find length of longest common subsequence in two strings.
+The characters need not be contiguous.
+SOLUTION:
+
+DP is the OP
+create 2d array of size [n+1][m+1]
+First row and column are initialized to zero
+If x[i-1]=y[j-1],then ar[i][j]=ar[i-1][j-1]+1
+else ar[i][j]=max(ar[i-1][j],ar[i][j-1])
+result is max element in the array
+
+
+*/
+#include <iostream>
+using namespace std;
+int longestcommonsubsequence(char* x,char* y,int n,int m){
+    int result =0;
+    char arr[n+1][m+1];
+    for(int i=0;i<=n;i++){
+        for(int j=0;j<=m;j++){
+            
+            if(i==0||j==0){
+                arr[i][j]=0;
+            }
+            else if(x[i-1]==y[j-1]){
+                arr[i][j]=arr[i-1][j-1]+1;
+                result=(result>arr[i][j])?result:arr[i][j];
+            }
+            else{
+                arr[i][j]=(arr[i-1][j]>arr[i][j-1])?arr[i-1][j]:arr[i][j-1];
+            }
+        }
+    }
+    return result;
+    
+}
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    int n,m;
+	    cin>>n>>m;
+	    char x[n+1],y[m+1];
+	    cin>>x>>y;
+	    cout<<longestcommonsubsequence(x,y,n,m)<<endl;
+	}
+	return 0;
+}
