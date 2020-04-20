@@ -1,0 +1,66 @@
+#include<iostream>
+using namespace std;
+
+
+typedef struct Node{
+int data;
+struct Node* left;
+struct Node* right;
+Node(int data){
+this->data=data;
+left=right=NULL;
+}
+};
+
+int findheight(Node* node){
+    if(node==NULL){
+        return 0;
+    }
+    int lheight=findheight(node->left);
+    int rheight=findheight(node->right);
+    if(lheight>rheight){
+        return 1+lheight;
+    }
+    else{
+        return 1+rheight;
+    }
+}
+
+void levelvalue(Node* node,int val){
+    if(node==NULL){
+        return;
+    }
+    if(val==1){
+        cout<<node->data<<" ";
+    }
+    levelvalue(node->left,val-1);
+    levelvalue(node->right,val-1);
+    
+    
+}
+void levelOrder(Node* node)
+{
+  //Your code here
+  int height=findheight(node);
+  for(int i=1;i<=height;i++){
+      levelvalue(node,i);
+  }
+}
+
+
+int main()
+{
+    struct node* root=new node(1);
+    root->left=new node(2);                 //Initialize our tree
+    root->right=new node(3);
+    root->left->left=new node(4);
+    root->left->right=new node(5);
+    root->right->left=new node(6);
+    root->right->right=new node(7);
+    levelOrder(root);
+    
+    return 0;
+}
+
+
+
