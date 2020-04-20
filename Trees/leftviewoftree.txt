@@ -1,0 +1,74 @@
+#include <bits/stdc++.h> 
+#include<iostream>
+using namespace std;
+/*
+Left view means the leftmost value of each level starting from root
+left element can also be on the right side of the root.
+Here we implemented breadth first traversal 
+but when it comes to displaying only the first element of the level is displayed.
+
+*/
+
+typedef struct Node{
+int data;
+struct Node* left;
+struct Node* right;
+Node(int data){
+this->data=data;
+left=right=NULL;
+}
+};
+
+int maxheight(Node* root){
+    if(root==NULL){
+        return 0;
+    }
+    else{
+        return 1+ max(maxheight(root->left),maxheight(root->right));
+    }
+}
+void levelview(Node* root,int level,int* flag){
+    
+    if(root==NULL){                         
+        return;
+    }
+    if((level==1)&&(*flag)){
+        cout<<root->data<<" ";
+        *flag=0;
+        return;
+    }
+    levelview(root->left,level-1,flag);
+    levelview(root->right,level-1,flag);
+    
+}
+/*
+
+flag is the value initialized to 1 and passed to levelview
+such that when first value of the level gets passed ,flag is resetted to 0
+such that no more value from that level will be displayed
+
+
+*/
+void leftView(Node *root)
+{
+   // Your code here 
+   int flag,height=maxheight(root);
+   for(int i=1;i<=height;i++){
+       flag=1;
+       levelview(root,i,&flag);
+   }
+   
+}
+int main()
+{
+    struct node* root=new node(1);
+    root->left=new node(2);                 //Initialize our tree
+    root->right=new node(3);
+    root->left->left=new node(4);
+    root->left->right=new node(5);
+    root->right->left=new node(6);
+    root->right->right=new node(7);
+    leftview(root);
+    
+    return 0;
+}

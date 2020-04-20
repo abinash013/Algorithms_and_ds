@@ -1,3 +1,11 @@
+/*
+Level order traversal is also known as breadth first traversal
+Here we traverse the tree in a breadth wise fashion ,
+starting from root till the last row of the tree
+
+
+
+*/
 #include<iostream>
 using namespace std;
 
@@ -7,7 +15,7 @@ int data;
 struct Node* left;
 struct Node* right;
 Node(int data){
-this->data=data;
+this->data=data;                  
 left=right=NULL;
 }
 };
@@ -17,9 +25,9 @@ int findheight(Node* node){
         return 0;
     }
     int lheight=findheight(node->left);
-    int rheight=findheight(node->right);
-    if(lheight>rheight){
-        return 1+lheight;
+    int rheight=findheight(node->right);      //returns height of the tree
+    if(lheight>rheight){                      //recursive call is made and such that
+        return 1+lheight;                     // max(lheight,rheight) is found for root node
     }
     else{
         return 1+rheight;
@@ -31,9 +39,9 @@ void levelvalue(Node* node,int val){
         return;
     }
     if(val==1){
-        cout<<node->data<<" ";
-    }
-    levelvalue(node->left,val-1);
+        cout<<node->data<<" ";              //This is where core logic lies
+    }                                       //level order is passed here and here when  
+    levelvalue(node->left,val-1);           //level reaches the correct value,it gets displayed.
     levelvalue(node->right,val-1);
     
     
@@ -41,8 +49,8 @@ void levelvalue(Node* node,int val){
 void levelOrder(Node* node)
 {
   //Your code here
-  int height=findheight(node);
-  for(int i=1;i<=height;i++){
+  int height=findheight(node);        //Here call is made for levelview 
+  for(int i=1;i<=height;i++){         //pertaining to each level starting from 1
       levelvalue(node,i);
   }
 }
