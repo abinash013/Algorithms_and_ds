@@ -38,7 +38,7 @@ void inorder(struct node* root){
     node* current=root;
     while(current!=NULL||s.empty()==false){
         
-    while(current!=NULL){    //to check left child of parent
+    while(current!=NULL){    //to push left child of parent
         s.push(current);
         current=current->left;
     }

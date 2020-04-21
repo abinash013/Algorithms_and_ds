@@ -1,0 +1,61 @@
+#include <iostream>
+#include<bits/stdc++.h>
+/*
+
+Binary Search Tree(BST) is a tree in which left subchild is lesser than the parent
+and the right subchild is greater than the parent.
+Here a node is checked whether it is in (min,max].
+while calling root->left, max is set to root->data as all nodes left of it are
+expected to be lesser than max.
+while calling root->right,min is set to root->data as all nodes right of it are
+expected to be greater than min.
+
+
+
+*/
+
+using namespace std;
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+    node(int data){
+        this->data=data;
+        left=right=NULL;
+    }
+};
+
+
+
+bool checkbst(node* root,int min,int max){
+    if(root==NULL){
+        return true;
+    }
+    if((root->data>min)&&(root->data<=max))
+    {
+        return checkbst(root->left,min,root->data)&&checkbst(root->right,root->data,max);
+    }
+    return false;
+}
+bool isBST(node* root){
+    if(root==NULL){
+        return true;
+    }
+    if(checkbst(root,INT_MIN,INT_MAX)){
+        return true;
+    }
+    return false;
+}
+int main()
+{
+    struct node* root=new node(1);
+    root->left=new node(2);                 //Initialize our tree
+    root->right=new node(3);
+    root->left->left=new node(4);
+    root->left->right=new node(5);
+    root->right->left=new node(6);
+    root->right->right=new node(7);
+    cout<<isBST(root);                  // 1 -BST,0 -Not a BST
+    
+    return 0;
+}
