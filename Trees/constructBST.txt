@@ -1,0 +1,65 @@
+#include<iostream>
+using namespace std;
+/*
+This function is used to construct BST
+We insert elements one by one iteratively
+by comparing with data starting from the root node of the tree
+Then finally we print the inorder traversal of the constructed tree
+
+
+*/
+class node{
+    public:
+    int data;
+    node* left;
+    node* right;
+};
+
+node* newnode(int data){
+    node* nnode=new node();
+    nnode->data=data;
+    nnode->left=NULL;
+    nnode->right=NULL;
+    return nnode;
+}
+
+void insertnodebst(node* root,node* nnode){
+     node* temp=root;
+    while(temp){
+        if((nnode->data)<(temp->data)){
+            if(temp->left==NULL){
+                temp->left=nnode;
+                break;
+            }
+            temp=temp->left;
+            
+        }
+        else {
+            if(temp->right==NULL){
+                temp->right=nnode;
+                break;
+            }
+            temp=temp->right;
+        }
+        
+    }
+}
+void printbst(node* root){
+    if(root==NULL){
+        return;
+    }
+    printbst(root->left);
+    cout<<root->data<<" ";
+    printbst(root->right);
+}
+int main(){
+   int arr[]={10,5,1,7,40,50};
+   node* root=newnode(arr[0]);
+   for(int i=1;i<sizeof(arr)/sizeof(int);i++){
+       node* nnode=newnode(arr[i]);
+       insertnodebst(root,nnode);
+   }
+   printbst(root);
+    
+    return 0;
+}
