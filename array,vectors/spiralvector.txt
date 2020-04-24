@@ -1,0 +1,73 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+/*
+spiral access of 2d array/vector
+ex [[1,2,3],
+    [4,5,6],
+    [7,8,9]]  the result should be 1,2,3,6,9,8,7,4,5
+left,right,bottom,top variables are initialized to corresponding values
+0,a[0].size-1,a.size,0 which are changed according to each iteration and it is placed in loop
+
+
+*/
+vector<int> spiralOrder(vector<vector<int> > A) {
+    
+    int left=0,top=0,right=(A[0].size()-1),bottom=A.size()-1,dir=0;
+    vector <int> result;
+    while((left<=right)&&(top<=bottom)){
+        if(dir==0){
+        for(int i=left;i<=right;i++){
+            result.push_back(A[top][i]);
+            //cout<<A[top][i]<<" ";
+        }
+        ++top;
+        }
+        else if(dir==1){
+            for(int i=top;i<=bottom;i++){
+                result.push_back(A[i][right]);
+                //cout<<A[i][right]<<" ";
+            }
+            --right;
+        }
+        else if(dir==2){
+            for(int i=right;i>=left;i--){
+                result.push_back(A[bottom][i]);
+                //cout<<A[bottom][i]<<" ";
+            }
+            --bottom;
+        }
+        else if(dir==3){
+            for(int i=bottom;i>=top;i--){
+                result.push_back(A[i][left]);
+                //cout<<A[i][left]<<" ";
+            }
+            ++left;
+        }
+        dir=(dir+1)%4;
+        
+        
+        
+        
+        
+    }
+    
+    return result;
+    
+    
+}
+
+
+int main()
+{
+  
+    int n,m;
+    cin>>n>>m;
+    vector< vector<int>> newvector={{1,2,3},{4,5,6},{7,8,9}};
+    vector <int> result;
+    result=spiralOrder(newvector);
+    for(auto i=result.begin();i!=result.end();i++){
+                 cout<<*i<<" ";
+    }
+    return 0;
+}
