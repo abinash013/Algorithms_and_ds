@@ -1,0 +1,50 @@
+/*
+Given an unsorted array A of size N of non-negative integers,
+find a continuous sub-array which adds to a given number S.
+
+SOLUTION:
+
+O(n^2) in which subarray traversal is done with inner loop in which subarray 
+sum is found and checked with given sum. If it is greater than the sum, control is
+breaked such that it gets optimized to a certain extent. 
+when the sum equals the given sum. starting and end index gets printed. flag is set
+and control breaks out of the entire loop when loop is not one -1 is printed
+which indicates that there exists no subarray of that sum.
+*/
+#include <iostream>
+using namespace std;
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    long int N,sum;
+	    cin>>N>>sum;
+	    long int arr[N],temp,start,end,flag=0;
+	    for(long int i=0;i<N;i++){
+	        cin>>arr[i];
+	    }
+	    for(long int i=0;i<N;i++){
+	        temp=0;
+	        for(long int j=i;j<N;j++){
+	            temp+=arr[j];
+	            if(temp>sum){
+	                break;
+	            }
+	            if(temp==sum){
+	                flag=1;
+	                cout<<i+1<<" "<<j+1<<endl;
+	                break;
+	            }
+	        }
+	        if(flag){
+	            break;
+	        }
+	    }
+	    if(flag==0){
+	        cout<<"-1"<<endl;
+	    }
+	}
+	return 0;
+}

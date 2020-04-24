@@ -1,0 +1,60 @@
+/*
+Given an unsorted array A of size N of non-negative integers,
+find a continuous sub-array which adds to a given number S.
+
+SOLUTION:
+
+this technique is known as sliding window technique
+which has a complexity of O(n)
+Here in array traversal temporary sum is found and checked
+with the given sum.
+If the temporary sum exceeds the given sum, a header is maintained
+(which starts with 0) ,arr[header] gets subtracted from the temporary sum
+and it gets repeated until the temporary sum is lesser than the given sum.
+When the temporary sum reaches the given sum, starting and ending index
+of the array are printed(Index starting from 1),else -1 gets printed with help of flag.
+
+
+*/
+
+#include<iostream>
+using namespace std;
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--){
+        int N,sum;
+        cin>>N>>sum;
+        int arr[N],flag=0;
+        for(int i=0;i<N;i++){
+            cin>>arr[i];
+        }
+        int header=0,tempsum=0;
+        for(int i=0;i<N;i++){
+            tempsum+=arr[i];
+            while(tempsum>sum){
+                tempsum-=arr[header];
+                ++header;
+            }
+            if(tempsum==sum){
+                cout<<header+1<<" "<<i+1<<endl;
+                flag=1;
+                break;
+            }
+            
+            
+            
+        }
+        if(!flag){
+            cout<<"-1"<<endl;
+        }
+        
+        
+        
+    }
+    
+    
+    return 0;
+    
+}
