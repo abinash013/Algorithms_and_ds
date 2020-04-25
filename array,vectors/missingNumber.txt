@@ -1,0 +1,26 @@
+#include<iostream>
+using namespace std;
+/*
+
+Given a number N
+followed by n-1 array in which there exist a missing number between[1,N]
+return missing number
+
+solution is provided by finding sum of N numbers using n(n+1)/2 and subtracting 
+each input number such that the missing number is left at the end.
+
+*/
+int main(){
+    
+    int n,x;
+    cin>>n;
+    int sum=n*(n+1)/2;
+    for(int i=0;i<n-1;i++){
+        cin>>x;
+        sum=sum-x;
+    }
+    cout<<sum;
+    
+    
+    return 0;
+}
