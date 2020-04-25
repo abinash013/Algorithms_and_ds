@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+/*
+Given an array arr of N integers. Find the contiguous sub-array with maximum sum.
+
+SOLUTION:
+max=temp=ar[0]
+for i=1 to n do:
+temp=max(ar[i],temp+ar[i])
+if(temp>max):
+max=temp
+
+
+
+*/
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    int n;
+	    cin>>n;
+	    int ar[n],temp=0,max=0;
+	    for(int i=0;i<n;i++){
+	        cin>>ar[i];
+	        if(i==0){
+	            max=ar[i];
+	            temp=ar[i];
+	            
+	        }
+	        else{
+	            if((ar[i]>temp)&&(ar[i]>(temp+ar[i]))){
+	                temp=ar[i];
+	            }
+	            else{
+	                temp=temp+ar[i];
+	            }
+	            if(temp>max){
+	                max=temp;
+	            }
+	        }
+	    }
+	    cout<<max<<endl;
+	}
+	return 0;
+}
