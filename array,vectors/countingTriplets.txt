@@ -2,7 +2,26 @@
 #include<vector>
 #include<bits/stdc++.h>
 using namespace std;
+/*
 
+sort the array in increasing order
+loop with i=n-1 until i>=0
+left=0,right=i-1 which are the indices of the array
+while left<right:
+  if ar[i]==ar[left]+ar[right]:
+    left++
+    right--
+    count++
+  else if ar[left]+ar[right] >ar[i]:
+    right--
+  else:
+    left++
+end while
+end loop
+
+return count
+
+*/
 
 int main() {
 	//code
