@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+/*
+
+Given two sorted arrays arr1[] and arr2[] in non-decreasing order with size n and m.
+The task is to merge the two sorted arrays into one sorted array (in non-decreasing order).
+
+SOLUTION:
+
+merge sort
+
+*/
+int main() {
+	int T;
+	cin>>T;
+	while(T--){
+	    int n,m;
+	    cin>>n>>m;
+	    int array1[n],array2[m];
+	    for(int i=0;i<n;i++){ cin>>array1[i];}
+	    for(int i=0;i<m;i++){ cin>>array2[i];}
+	    int left=0;
+	    int right=0;
+        while((left<n)&&(right<m)){
+            if(array1[left]<=array2[right]){
+                cout<<array1[left++]<<" ";
+            }
+            else {
+                cout<<array2[right++]<<" ";
+            }
+            
+        }
+        while(right<m){
+            cout<<array2[right++]<<" ";
+        }
+        while(left<n){
+            cout<<array1[left++]<<" ";
+        }
+        cout<<endl;
+	    
+	    
+	    
+	    
+	}
+	return 0;
+}

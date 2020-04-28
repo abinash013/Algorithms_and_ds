@@ -1,0 +1,63 @@
+#include <iostream>
+#include<string.h>
+using namespace std;
+/*
+Given a string S, find the longest palindromic substring in S. 
+Substring of string S: S[ i . . . . j ] where 0 ≤ i ≤ j < len(S). 
+Palindrome string: A string which reads the same backwards.
+ More formally, S is palindrome if reverse(S) = S. Incase of conflict,
+ return the substring which occurs first ( with the least starting index ).
+
+SOLUTION:
+
+The longest palindromic string is found using recursion which explains itself below
+
+
+*/
+int recurcheck(string s1,int i,int j){
+    if(i==j){
+        return 1;   //If start and end index are same ,returns 1
+    }
+    if(i>j){
+        return 0;   //it reached the end so 0
+    }
+    if(s1[i]!=s1[j]){
+        return -999;    //it means the char are not equal ,hence the string can't 
+                        //be a palindrome so returns min value such that entire length
+                        //at the end be the lowest
+    }
+    else{
+        return 2+recurcheck(s1,i+1,j-1);  //when equal adds 2(start and end length)
+    }                                     //and makes recursive call with inc in start and dec in end index.
+}
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--)
+	{
+	    string s1;
+	    cin>>s1;
+	    int start=0,end=0,max=-1,length,count=0;
+	    for(int i=1;i<s1.length();i++){
+	        for(int j=0;j<i;j++){
+	            if(s1[i]==s1[j]){
+	                if((length=recurcheck(s1,j,i))>0){
+	                    if(length>max){
+	                        start=j;
+	                        end=i;
+	                        max=length;
+	                    }
+	                }
+	            }
+	        }
+	        
+	    }
+	    for(int i=start;i<=end;i++){  //start and end pertains to indices of max palindrome substring
+	        cout<<s1[i];
+	    }
+	    cout<<endl;
+	}
+	return 0;
+}
