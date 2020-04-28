@@ -1,0 +1,58 @@
+#include <iostream>
+#include<stack>
+#include<bits/stdc++.h>
+using namespace std;
+/*
+
+Given an expression string exp. Examine whether the pairs and the orders of “{“,”}”,”(“,”)”,”[“,”]” are correct in exp.
+For example, the program should print 'balanced' for exp = “[()]{}{[()()]()}” and 'not balanced' for exp = “[(])”
+
+SOLUTION:
+
+(,[,{ are pushed into the stack
+Incoming close brackets are compared with top of stack
+If equal stack is popped and process repeats for the further incoming inputs
+else flag is set and breaks out of loop.
+
+
+
+*/
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    string s1;
+	    cin>>s1;
+	    stack<char> open;
+	    int flag=0;
+	    for(int i=0;i<s1.length();i++){
+	        
+	        if((s1[i]=='{')||(s1[i]=='(')||(s1[i]=='[')){
+	            open.push(s1[i]);
+	        }
+	        else if(open.empty()){
+	            flag=1;
+	            break;
+	        }
+	        else if((s1[i]==')')&&(open.top()=='(')||
+	        (s1[i]==']')&&(open.top()=='[')||(s1[i]=='}')&&(open.top()=='{')){
+	            open.pop();
+	        }
+	            else{
+	                flag=1;
+	                break;
+	            }
+	        
+	        
+	    }
+	    if((open.empty())&&(!flag)){
+	        cout<<"balanced"<<endl;
+	    }
+	    else{
+	        cout<<"not balanced"<<endl;
+	    }
+	}
+	return 0;
+}

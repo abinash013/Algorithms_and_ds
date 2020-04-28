@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	getchar();
+	while(T--){
+	    int count[256]={0};
+	    char c;
+	    while (((c = getchar()) != '\n') && (c != EOF)){
+	        if((count[c]++)==0){
+	            cout<<c;
+	        }
+	    }
+	    cout<<endl;
+	}
+	return 0;
+}

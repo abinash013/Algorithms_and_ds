@@ -1,0 +1,71 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+/*
+Given an array A of size N having distinct elements,
+ the task is to find the next greater element for each element 
+of the array in order of their appearance in the array.
+ If no such element exists, output -1 
+
+SOLUTION:
+
+for i<-n-1 to 0 do
+while stack not empty and arr[i]>=stack.top():
+    pop stack
+result[i]<-stack.empty?-1:stack.top
+stack.push(arr[i])
+
+
+
+*/
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    long int n;
+	    cin>>n;
+	    long int arr[n],result[n];
+	    for(long int i=0;i<n;i++){
+	        cin>>arr[i];
+	    }
+	    stack<long int> s;
+	    for(int i=n-1;i>=0;i--){
+	        
+	        while((!s.empty())&&(arr[i]>=s.top())){   //
+	            s.pop();                             
+	        }
+	        result[i]=s.empty()?-1:s.top();   //!s.empty() means top is the larger than current
+	        s.push(arr[i]);                //push current cuz stack might be empty or it may be
+	                                       //larger when compared to next elements to be compared.
+	        
+	        
+	        
+	    }
+	    
+	    for(int i=0;i<n;i++){
+	        cout<<result[i]<<" ";
+	    }
+	    cout<<endl;
+	    
+	    
+	    /*      NOT EFFICIENT O(N^2)
+	    for(long int i=0;i<n;i++){
+	        flag=1;
+	        for(long int j=i;j<n;j++){
+	            if(arr[j]>arr[i]){
+	                cout<<arr[j]<<" ";
+	                flag=0;
+	                break;
+	            }
+	        }
+	        if(flag){
+	            cout<<"-1"<<" ";
+	        }
+	    }
+	    cout<<endl;
+	    */
+	}
+	return 0;
+}
