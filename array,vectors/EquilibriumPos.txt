@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+/*
+Given an array A of N positive numbers. The task is to find the 
+position where equilibrium first occurs in the array. 
+Equilibrium position in an array is a position such that the sum of elements
+before it is equal to the sum of elements after it.
+
+SOLUTION:
+simple solution O(n)
+where sum of entire array is found and equilibrium pos is
+found by comparing prev sum and next sum of subarrays by subtracting curr element 
+value which returns next subarray sum. prev subarray is found by adding curr element to it.
+
+*/
+
+
+
+//returns sum from cur to end index
+/*int retsum(int arr[],int cur,int n){
+    if(cur==n){
+        return 0;
+    }
+    return arr[cur]+retsum(arr,cur+1,n);
+}
+*/
+int main() {
+	//code
+	int T;
+	cin>>T;
+	while(T--){
+	    int n;
+	    cin>>n;
+	    int arr[n],sum=0;
+	    for(int i=0;i<n;i++){
+	        cin>>arr[i];
+	        sum+=arr[i];
+	    }
+	    int prev=arr[0],flag=1;
+	    if(n==1){
+	        cout<<1<<endl;
+	        flag=0;
+	    }
+	    sum-=arr[0];
+	    for(int i=1;i<n&&(flag);i++){
+	       /* if(prev==retsum(arr,i+1,n)){
+	            cout<<i+1<<endl;
+	            flag=0;
+	            break;
+	        }  */
+	        sum-=arr[i];
+	        if(prev==sum){
+	            cout<<i+1<<endl;
+	            flag=0;
+	            break;
+	        }
+	        prev+=arr[i];
+	    }
+	    if(flag){
+	        cout<<"-1"<<endl;
+	    }
+	    
+	    
+	    
+	    
+	}
+	return 0;
+}

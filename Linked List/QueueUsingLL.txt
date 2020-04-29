@@ -1,0 +1,76 @@
+#include<iostream>
+using namespace std;
+
+
+struct QueueNode
+{
+    int data;
+    QueueNode *next;
+    QueueNode(int a)
+    {
+        data = a;
+        next = NULL;
+    }
+};
+
+And structure of MyQueue
+struct MyQueue {
+    QueueNode *front;
+    QueueNode *rear;
+    void push(int);
+    int pop();
+    MyQueue() {front = rear = NULL;}
+};
+
+/* The method push to push element into the queue*/
+void MyQueue:: push(int x)
+{
+        // Your Code
+        QueueNode *temp=new QueueNode(x);
+        if(front==NULL){
+            front=temp;
+            rear=temp;
+        }
+        else{
+            rear->next=temp;
+            rear=temp;
+        }
+}
+
+
+/*The method pop which return the element
+  poped out of the queue*/
+int MyQueue :: pop()
+{
+        // Your Code      
+        if(front==NULL){
+            return -1;
+        }
+        int t=front->data;
+        front=front->next;
+        return t;
+}
+int main(){
+   int T;
+   cin>>T;
+   while(T--){
+      MyQueue *sq=new MyQueue();
+      int q;
+      cin>>q;
+      while(q--){
+      int type=0;
+      cin>>type;
+      if(type==1){
+            int a;
+            cin>>a;
+            sq->push(a);
+      }
+      else if(type==2){
+              cout<<sq->pop()<<" ";
+         }
+       }
+       cout<<endl;
+      }
+
+return 0;
+}

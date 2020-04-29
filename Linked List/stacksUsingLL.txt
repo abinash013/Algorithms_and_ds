@@ -1,0 +1,96 @@
+#include<iostream>
+using namespace std;
+
+/*
+ You have a linked list and you have to implement the functionalities
+ push and pop of stack using this given linked list.
+
+
+
+
+
+*/
+
+struct StackNode
+{
+    int data;
+    StackNode *next;
+    StackNode(int a)
+    {
+        data = a;
+        next = NULL;
+    }
+};
+
+class MyStack {
+private:
+StackNode *top;
+public :
+    void push(int);
+    int pop();
+    MyStack()
+    {
+        top = NULL;
+    }
+};
+
+/* The method push to push element
+   into the stack */
+void MyStack ::push(int x) {
+    // Your Code
+    StackNode *temp=new StackNode(x);
+    if(top==NULL){
+        top=temp;
+    }
+    else{
+        
+        temp->next=top;
+        top=temp;
+        
+        
+    }
+}
+
+/* The method pop which return the element
+  poped out of the stack*/
+int MyStack ::pop() {
+    // Your Code
+    if(top==NULL){
+        return -1;
+        
+    }
+    else{
+        
+        int t=top->data;
+        top=top->next;
+        return t;
+        
+        
+        
+        
+    }
+}
+int main(){
+   int T;
+   cin>>T;
+   while(T--){
+      MyStack *sq=new MyStack();
+      int q;
+      cin>>q;
+      while(q--){
+      int type=0;
+      cin>>type;
+      if(type==1){
+            int a;
+            cin>>a;
+            sq->push(a);
+      }
+      else if(type==2){
+              cout<<sq->pop()<<" ";
+         }
+       }
+       cout<<endl;
+      }
+
+return 0;
+}
