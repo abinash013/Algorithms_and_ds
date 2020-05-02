@@ -1,0 +1,71 @@
+
+/*
+
+Given two numbers as stings s1 and s2 your task is to multiply them. You are required to complete the function multiplyStrings which takes two strings s1 and s2 as its only argument and returns their product as strings.
+
+
+
+
+
+*/
+#include<bits/stdc++.h>
+using namespace std;
+ 
+string multiplyStrings(string , string );
+ 
+int main() {
+ 
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		string a;
+		string b;
+		cin>>a>>b;
+ 
+		cout<<multiplyStrings(a,b)<<endl;
+	}
+ 
+}
+
+string multiplyStrings(string s1, string s2) {
+   //Your code here
+   if(!s1.length() || !s2.length() || s1=="0" || s2=="0")
+	{
+		return "0";
+	}
+	bool sign=((s1[0]=='-' && s2[0]=='-') || (s1[0]!='-' && s2[0]!='-'));
+	if(s1[0]=='-')
+	{
+		s1.erase(0,1);
+	}
+	if(s2[0]=='-')
+	{
+		s2.erase(0,1);
+	}
+	int digits[s1.length()+s2.length()]={0},digit=0,carry=0;
+	for(int i=0;i<s1.length();i++)
+	{
+		for(int j=0;j<s2.length();j++)
+		{
+			digits[i+j+1]+=(s1[i]-'0')*(s2[j]-'0');
+		}
+	}
+	for(int i=s1.length()+s2.length()-1;i>=0;i--)
+	{
+		digit=(digits[i]+carry)%10;
+		carry=(digits[i]+carry)/10;
+		digits[i]=digit;
+	}
+	int dig_ind=0;
+	while(digits[dig_ind]==0)
+	{
+		dig_ind++;
+	}
+	string s3=(!dig_ind && carry)?to_string(carry):"";
+	for(int i=dig_ind;i<s1.length()+s2.length();i++)
+	{
+		s3+=to_string(digits[i]);
+	}
+	return ((sign)?"":"-")+s3;
+}
