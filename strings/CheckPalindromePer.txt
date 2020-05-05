@@ -1,0 +1,85 @@
+//Check if the string is a permutation of a palindrome
+//For example aba the permutation of the palindrome can be baa or aab
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+/*
+int checkpermutation(string s){
+    int alpha[26]={0},count=0;
+    for(int i=0;i<s.length();i++){
+        ++alpha[s[i]-'a'];
+    }
+    for(int i=0;i<26;i++){
+        if(alpha[i]%2==1){
+            ++count;
+        }
+    }
+    if(count>1){
+        return false;
+    }
+    return true;
+}
+*/
+
+//In the above solution, the solution is found by incrementing count of occurences of each alphabet(lowercase). If there exist
+//odd number of character more than 1 then it is not a permutation of palindrome.
+//The idea is that for a string to be palindrome there should be even number of characters like 'aabb' ,'abba'
+//and for odd length there exist only one odd length character like 'aacbb' or 'acacaca'. [here c exist three times] Only one char length can be odd to be palindrome.
+
+bool checkbitset(long int table){
+    return (table&(table-1))==0;    
+}
+
+
+long int modify(long int table, long int temp){
+    
+    long int mask=1<<temp;
+    if((table & mask)==0){       //There exist no element
+        table|=mask;
+    }
+    else{
+        table&=~mask;
+    }
+    return table;
+    
+    
+}
+long int createBitTable(string x){
+    long int table=0,temp;
+    for(int i=0;i<x.length();i++){
+        temp=x[i]-'a';
+        table=modify(table,temp);
+    }
+    return table;
+}
+
+bool checkpermutation(string x){
+    long int table=createBitTable(x);
+    return table==0 ||checkbitset(table);
+}
+
+/*
+The above is another solution in which we represent hash table like structure 'table' in which we perform bitwise manipulation
+
+createBitTable creates table by placing 1 in indices while traversing through char when the same char occurs next it sets to zero.
+
+Modify does the above said manipulation. Index of char is passed ['a'-0]. mask bit is obtained by left shifting 1. For example mask bit of 'b' is 00000 0010
+and then it is checked with table if table is 0000 0000 , table & mask gives 0 which means there exist no bit in that position so now that bit is set by
+table=table|mask and it is returned.
+On the other hand, if the bit exists for any char say 'b' 0000 0010 and table 0000 1010. then table & mask gives 0000 0010. Now that bit has to be resetted
+Reset is done by ~mask 1111 1101 and & with table ( 1111 1101 & 0000 1010) gives 0000 1000 thus resetting second bit.This gets returned.
+
+Finally it is a permutation when table is 0 which means there exist no odd length char in string or if there exist only one char of odd length, which is
+checked by subtracting 1 from table for example 0000 1000 - 0000 0001 gives 0000 0111 , then & the result 0000 1000 & 0000 0111 which gives 0 when true.
+
+
+
+*/
+int main(){
+       
+    string s;
+    cin>>s;
+    cout<<checkpermutation(s)<<endl;
+    
+    return 0;
+}
