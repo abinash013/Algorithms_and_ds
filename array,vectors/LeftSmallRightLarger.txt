@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+/*
+Given an unsorted array of size N. Find the first element in array such that all of its left elements are smaller and all right elements to it are greater than it.
+
+
+
+*/
+
+
+bool islesser(int ar[],int index,int n){
+    for(int i=index;i<n;i++){
+        if(ar[i]<ar[index]){
+            return false;      //returns true if current element is smallest of the subarray
+        }
+    }
+    return true;
+}
+
+
+int checkequi(int ar[],int n){
+    int max=ar[0];
+    //cout<<max<<" ";
+    for(int i=1;i<n;i++){
+        if(ar[i]>=max){
+            max=ar[i];
+            if(islesser(ar,i,n)&&(i!=n-1)){
+                return ar[i];
+            }
+        }
+    }
+    return -1;
+}
+int main() {
+	//code
+	int testcase;
+	cin>>testcase;
+	while(testcase--){
+	    int n;
+	    cin>>n;
+	    int ar[n];
+	    for(int i=0;i<n;i++){
+	        cin>>ar[i];
+	    }
+	    cout<<checkequi(ar,n)<<endl;
+	}
+	return 0;
+}
