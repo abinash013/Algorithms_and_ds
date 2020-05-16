@@ -1,0 +1,57 @@
+/*
+
+The problem is to find the celebrity in a party. The celebrity is the one who 
+doesn't know anyone but everyone knows him. Then why he is in the party you ask, he is there
+to surprise everyone. 
+So you are given an array of N*N elements where N is the number of people in the
+party including the celebrity himself. 
+the value of [i]][j] is set when i knows j, not necessarily the other way around.
+So job is to find the celebrity whose row will be filled with 0 ,[i][i] is 0.
+
+
+
+
+
+*/
+
+
+
+int getId(int M[MAX][MAX], int n)
+{
+    //Your code here
+    int x=0,y=n-1;
+
+    while(x<y)
+    {
+        if(M[x][y]==1)   //when M[x][y] is 1, then x knows y, so x is not celebrity hence x++
+        x++;   
+        else              //when 0, then y is not a celebrity, hence y--
+        y--;
+    }
+    //for checking zeros
+    for(int i=0;i<=n;)
+    {
+        if(M[x][i]==0)
+        {
+        i++;               //To check if he doesn't know anybody
+        }
+        else
+        return -1;
+    }
+    //for checking ones before x
+    for(int i=0;i<x;)
+    {
+        if(M[i][x]==1)            //to check if everybody knows him
+        i++;
+        else return -1;
+    }
+    //for checking ones after x
+    for(int i=x+1;i<n;)
+    {
+        if(M[i][x]==1)
+        i++;
+        else return -1;
+       
+    }
+    return x;
+}

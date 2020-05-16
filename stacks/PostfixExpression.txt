@@ -1,0 +1,74 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+/*
+
+Given a postfix expression, the task is to evaluate the expression and print the final value. Operators will only include the basic arithmetic operators like *,/,+ and - . 
+
+Input:
+The first line of input will contains an integer T denoting the no of test cases . Then T test cases follow. Each test case contains an postfix expression.
+
+Output:
+For each test case, in a new line, evaluate the postfix expression and print the value.
+
+
+Example:
+Input:
+2
+231*+9-
+123+*8-
+Output:
+-4
+-3
+
+Explanation: 
+Test Case 1: 231*+9-
+- : ( ) - ( )
+9 : ( ) - (9)
++ : ( ( ) + ( ) ) - (9)
+'*':  ( ( ) + ( ( ) * ( ) ) ) - (9)
+1 : ( ( ) + ( ( ) * (1) ) ) - (9)
+3 : ( ( ) + ( (3) * (1) ) ) - (9)
+2 : ( (2) + ( (3) * (1) ) ) - (9) 
+Result = (2 + 3) - 9 = 5 - 9 = -4
+
+
+
+*/
+int performcomp(int op1,int op2,char ch){
+    switch(ch){
+        case '+':return op1+op2;break;
+        case '-':return op1-op2;break;
+        case '/':return op1/op2;break;
+        case '*':return op1*op2;break;
+       
+        
+    }
+}
+int main() {
+	//code
+	int t,x,y,temp;
+	cin>>t;
+	
+	while(t--){
+	    string s;
+	    cin>>s;
+	    stack<int> stk;
+	    for(int i=0;i<s.length();i++){
+	        if(s[i]=='+'||s[i]=='-'||s[i]=='*'||s[i]=='/'){
+	            x=stk.top();
+	            stk.pop();
+	            y=stk.top();               //In case of operator two operands from stack are popped and operation is performed and result is pushed on top of stack.
+	            stk.pop();
+	            temp=performcomp(y,x,s[i]);
+	            stk.push(temp);
+	        }
+	        else{
+	            stk.push(s[i]-'0');
+	        }
+	    }
+	    cout<<stk.top()<<endl;
+	    stk.pop();
+	}
+	return 0;
+}
