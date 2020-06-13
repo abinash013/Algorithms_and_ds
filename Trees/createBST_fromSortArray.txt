@@ -1,0 +1,66 @@
+
+/*
+A sorted array is given to which you have to create a BST with minimal height.
+In BST, we know that the left child of any root is lesser than or equal to root and
+the right child is always greater than the root.
+
+It is given in the question to create a BST with minimal height. Therefore the mid
+value of the array is considered the root of the tree mid+1 to end elements are greater 
+than the mid and 0 to mid-1 must be lesser than or equal to mid since it is already
+in the sorted order. 
+
+pseudo code:
+func(arr,start,end)
+	root = arr[mid]
+	root->left = func(arr,start,mid-1)
+	root->right = func(arr,mid+1,end)
+	return root
+
+*/
+
+#include <iostream>
+using namespace std;
+
+struct node{
+    int data;
+    struct node* left;
+    struct node* right;
+    
+    node(int data){
+        this->data = data;
+        left = right = NULL;
+    }
+};
+
+struct node* createBST(int arr[],int start, int end){
+    if(start > end){
+        return NULL;
+    }
+    int mid = (start + end ) / 2;
+    struct node* root = new node(arr[mid]);
+    root->left = createBST(arr, start, mid-1);
+    root->right = createBST(arr, mid+1, end);
+    return root;
+    
+}
+
+struct node* createBST(int arr[]){
+    int end = 8;
+    return createBST(arr, 0, end);
+    
+}
+void inOrder(struct node* root){
+    if(root == NULL){
+        return ;
+    }
+    
+    inOrder(root->left);cout<<root->data<<" ";
+    inOrder(root->right);
+}
+
+int main() {
+	int arr[10] = {1,4,5,12,19,23,25,39,55};
+	struct node* root = createBST(arr);
+	inOrder(root);
+	return 0;
+}

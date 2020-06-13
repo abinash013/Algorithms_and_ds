@@ -1,0 +1,35 @@
+/*
+Merge two sorted arrays without using any extra spaces provided that extra buffer 
+available at end of array 1
+
+*/
+
+#include<iostream>
+#include<vector>
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> sortsortedarrays(vector<int> a,vector<int> b,int al,int bl){
+    int aIndex=al-1;
+    int bIndex=bl-1;
+    int resultIndex=aIndex+bIndex+1;
+    while(bIndex>=0){
+        if(a[aIndex]>=b[bIndex]){
+            a[resultIndex--]=a[aIndex--];
+        }
+        else{
+            a[resultIndex--]=b[bIndex--];
+        }
+    }
+    return a;
+    
+}
+
+int main(){
+    vector<int> a={3,3,4,5,6,9,0,0,0,0};  //0 denotes empty spaces
+    vector<int>b ={7,12,15,25};
+    a=sortsortedarrays(a,b,6,4);  //6,4 len of elements
+    for(auto i=a.begin();i!=a.end();i++){
+        cout<<*i<<" ";
+    }
+    return 1;
+}

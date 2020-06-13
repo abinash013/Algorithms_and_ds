@@ -1,0 +1,56 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<vector>
+using namespace std;
+
+
+
+int binarysearch(vector<int> a, int key, int low, int high){
+    int mid = (low + high) / 2;
+    if(a[mid] == key){
+        return mid;
+    }
+    else if(low > high){
+        return -1;
+    }
+    if(a[low]<a[mid]){  //left is normally ordered
+        if(key >= a[low] && key<a[mid]){
+            return binarysearch(a,key,low,mid-1);
+        }
+        else{
+            return binarysearch(a,key,mid+1,high);
+        }
+    }
+    else if(a[mid]<a[high]){  //right is normally ordered
+        if(key > a[mid] && key <= a[high]){
+            return binarysearch(a,key,mid+1,high);
+        }
+        else{
+            return binarysearch(a,key,low,mid-1);
+        }
+    }
+    else if(a[low]==a[mid]){  //When low and mid are the same which means low..mid can be eliminated
+        if(a[mid]!=a[high]){  // if != then search is continued on that part
+            return binarysearch(a,key,mid+1,high);
+        }
+        else{  //when a[low]=a[mid]=a[high],we have no choice but to traverse the both sides
+            int result=binarysearch(a,key,low,mid);
+            if(result == -1){
+                return binarysearch(a,key,mid+1,high);
+            }
+            else{
+                return result;
+            }
+        }
+    }
+    return -1;
+    
+}
+
+int search(vector<int> a, int key){
+    return binarysearch(a, key, 0, a.size()-1);
+}
+int main(){
+    vector<int> a = {17,18,19,29,0,1,4,9,12,15};
+    cout<<search(a,4);
+}
