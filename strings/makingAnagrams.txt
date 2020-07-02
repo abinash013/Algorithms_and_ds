@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// Complete the makeAnagram function below.
+int makeAnagram(string a, string b) {
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    int i = 0, j = 0, count = 0;
+    while(i < a.length() && j < b.length()){
+        if(a[i] == b[j]){
+            ++i;
+            ++j;
+            continue;
+        }
+        if(a[i] < b[j]){
+            ++i;
+        }
+        else{
+            ++j;
+        }
+        ++count;
+    }
+    if(i < a.length()){
+        for(int k = i; k < a.length(); k++){
+            ++count;
+        }
+    }
+    if(j < b.length()){
+        for(int k = j; k < b.length(); k++){
+            ++count;
+        }
+    }
+    return count;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string a;
+    getline(cin, a);
+
+    string b;
+    getline(cin, b);
+
+    int res = makeAnagram(a, b);
+
+    fout << res << "\n";
+
+    fout.close();
+
+    return 0;
+}
