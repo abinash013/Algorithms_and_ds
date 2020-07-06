@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+
+/*
+
+Lilah has a string s , of lowercase English letters that she repeated infinitely many times.
+
+Given an integer n , find and print the number of letter a's in the first  letters of Lilah's infinite string.
+
+Sample Input 0
+
+aba
+10
+Sample Output 0
+
+7
+Explanation 0
+The first n=10 letters of the infinite string are abaabaabaa. Because there are 7 a's, we print 7 on a new line.
+*/
+using namespace std;
+
+// Complete the repeatedString function below.
+long repeatedString(string s, long n) {
+       long countA = 0;
+          for(long i = 0;i < s.length();i++){
+              if(s[i] == 'a'){
+                  ++countA;
+              }
+          }
+          long total = n/s.length();
+          long Occurences = total * countA;
+          long temp = n%s.length();
+          for(long i = 0; i < temp ;i++){
+              if(s[i] == 'a'){
+                  Occurences++;
+              }
+          }
+          return Occurences;
+
+}
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string s;
+    getline(cin, s);
+
+    long n;
+    cin >> n;
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    long result = repeatedString(s, n);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}

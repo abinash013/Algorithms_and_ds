@@ -1,0 +1,214 @@
+Given a Binary Tree, print the vertical traversal of it starting from the leftmost level to the rightmost level.
+If there are multiple nodes passing through a vertical line, then they should be printed as they appear in level order traversal of the tree.
+
+Solution here is that root assigned distance, hd =  0
+hd(root->left) = -1, hd(root->right) = 1 and so on to each node relatively acts as root for its children
+Then using hash table with hd as hash key, values are stored in vector for each key while traversing 
+breadth wise(level order).
+Since map is already sorted ascending order, we can then return a vector pushing all values starting from
+lowest hash key which is the leftmost order with rightmost order having higher value will be at last key
+#include <bits/stdc++.h>
+using namespace std;
+
+// Tree Node
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+};
+// Utility function to create a new Tree Node
+Node* newNode(int val)
+{
+    Node* temp = new Node;
+    temp->data = val;
+    temp->left = NULL;
+    temp->right = NULL;
+    
+    return temp;
+}
+
+vector <int> verticalOrder(Node *root);
+
+// Function to Build Tree
+Node* buildTree(string str)
+{   
+    // Corner Case
+    if(str.length() == 0 || str[0] == 'N')
+            return NULL;
+    
+    // Creating vector of strings from input 
+    // string after spliting by space
+    vector<string> ip;
+    
+    istringstream iss(str);
+    for(string str; iss >> str; )
+        ip.push_back(str);
+        
+    // Create the root of the tree
+    Node* root = newNode(stoi(ip[0]));
+          
+    // Push the root to the queue
+    queue<Node*> queue;
+    queue.push(root);
+        
+    // Starting from the second element
+    int i = 1;
+    while(!queue.empty() && i < ip.size()) {
+            
+        // Get and remove the front of the queue
+        Node* currNode = queue.front();
+        queue.pop();
+            
+        // Get the current node's value from the string
+        string currVal = ip[i];
+            
+        // If the left child is not null
+        if(currVal != "N") {
+                
+            // Create the left child for the current node
+            currNode->left = newNode(stoi(currVal));
+                
+            // Push it to the queue
+            queue.push(currNode->left);
+        }
+            
+        // For the right child
+        i++;
+        if(i >= ip.size())
+            break;
+        currVal = ip[i];
+            
+        // If the right child is not null
+        if(currVal != "N") {
+                
+            // Create the right child for the current node
+            currNode->right = newNode(stoi(currVal));
+                
+            // Push it to the queue
+            queue.push(currNode->right);
+        }
+        i++;
+    }
+    
+    return root;
+}
+
+// Function for Inorder Traversal
+void printInorder(Node* root)
+{
+    if(!root)
+        return;
+        
+    printInorder(root->left);
+    cout<<root->data<<" ";
+    printInorder(root->right);
+}
+
+
+int main() {
+    int t;
+    string  tc;
+    getline(cin,tc);
+    t=stoi(tc);
+    while(t--)
+    {
+        string s;
+        getline(cin,s);
+        // string c;
+        // getline(cin,c);
+    	Node* root = buildTree(s);
+    	
+    	vector <int> res = verticalOrder(root);
+    	for (int i : res) cout << i << " ";
+        cout << endl;
+    }
+	return 0;
+}
+
+
+// } Driver Code Ends
+
+
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child 
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
+
+// root: root node of the tree
+
+/*
+void findMinMax(int *min, int *max, Node* root, int hd){
+    if(root == NULL){
+        return;
+    }
+    if(hd < *min){
+        *min = hd;
+    }
+    else if(hd >= *max){
+        *max = hd;
+    }
+    findMinMax(min, max, root->left, hd - 1);
+    findMinMax(min, max, root->right, hd + 1);
+    
+}
+
+void findLevel(Node* root,int hd, int n){
+    if(root == NULL){
+        return;
+    }
+    if(n == hd){
+        v.push_back(root->data);
+    }
+    findLevel(root->left, hd, n-1);
+    findLevel(root->right, hd, n+1);
+}
+*/
+
+vector<int> verticalOrder(Node *root)
+{
+    //Your code here
+    vector<int> v;
+    map < int, vector<int> > m;
+    if(root == NULL){
+        return v;
+    }
+    int hd = 0;
+    queue< pair<int, Node*>> q;
+    q.push(make_pair(hd, root));
+    while(!q.empty()){
+        pair <int, Node*> tempPair= q.front();
+        q.pop();
+        hd = tempPair.first;
+        Node* nnode = tempPair.second;
+        m[hd].push_back(nnode->data);
+        if(nnode->left != NULL){
+            q.push(make_pair(hd-1, nnode->left));
+        }
+        if(nnode -> right != NULL){
+            q.push(make_pair(hd + 1, nnode->right));
+        }
+        
+        
+        
+    }
+    map< int, vector<int> > ::iterator it;
+    for(it = m.begin();it != m.end();it++){
+        for(int i = 0;i < it->second.size(); i++){
+            v.push_back(it->second[i]);
+        }
+    }
+    
+    return v;
+}
+
