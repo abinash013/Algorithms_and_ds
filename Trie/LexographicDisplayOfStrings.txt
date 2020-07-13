@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+
+#define ALPHABET_SIZE 26
+struct TrieNode{
+    TrieNode* children[ALPHABET_SIZE];
+    bool isLeaf;
+};
+
+TrieNode* getNode(){
+    TrieNode* nnode = new TrieNode;
+    nnode->isLeaf = false;
+    for(int i = 0;i < ALPHABET_SIZE; i++){
+        nnode->children[i] = NULL;
+    }
+    return nnode;
+}
+
+void insert(TrieNode* root, string s){
+    TrieNode* temp = root;
+    for(int i = 0;i < s.length();i++){
+        int index = s[i] - 'a';
+        if(!temp->children[index]){
+            temp->children[index] = getNode();
+        }
+        temp = temp->children[index];
+    }
+    temp->isLeaf = true;
+    
+}
+
+
+void display(TrieNode* root, char s[], int level){
+    
+    
+    if(root->isLeaf){
+        s[level] = '\0';
+        cout<<s<<" ";
+    }
+    for(int i = 0; i < ALPHABET_SIZE;i++){
+        if(root->children[i]){
+            s[level] = i + 'a';
+            display(root->children[i], s, level+1);
+        }
+    }
+}
+
+int main() 
+{ 
+    // Keys to be inserted in Trie 
+    char keys[][8] = { "the", "a", "there", "answer", 
+                       "any", "by", "bye", "their" }; 
+  
+    TrieNode* root = getNode(); 
+  
+    // Inserting keys in Trie 
+    for (int j = 0; j < 8; j++) 
+        insert(root, keys[j]); 
+  
+    int level = 0; 
+    char str[20]; 
+  
+    // Displaying content of Trie 
+    cout << "Content of Trie: " << endl; 
+    display(root, str, level); 
+} 

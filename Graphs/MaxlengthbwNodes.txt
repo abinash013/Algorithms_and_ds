@@ -1,0 +1,84 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+class Graph{
+    int V;
+    list<int> *adj;
+    public:
+    Graph(int V);
+    void addEdge(int u, int v);
+    void longestpathlength();
+    pair<int, int> bfs(int u);
+};
+
+Graph::Graph(int v){
+    this->V = v;
+    this->adj = new list<int>[v];
+}
+
+void Graph::addEdge(int u, int v){
+    adj[u].push_back(v);
+    adj[v].push_back(u);
+}
+
+pair<int,int> Graph::bfs(int u){
+    int dis[V];
+    memset(dis, -1,sizeof(dis));
+    dis[u] = 0;
+    queue<int> q;
+    q.push(u);
+    
+    while(!q.empty()){
+        
+        int t = q.front();
+        q.pop();
+        
+        for(auto it = adj[t].begin();it != adj[t].end(); it++){
+            int x = *it;
+            if(dis[x] == -1){
+                q.push(x);
+               dis[x] = dis[t] + 1;
+               
+            }
+        }
+    }
+    int maxdistance = 0, index=0;
+    for(int i = 0;i < V;i++){
+        if(dis[i] > maxdistance){
+            maxdistance = dis[i];
+            index = i;
+        }
+    }
+    return make_pair(index, maxdistance);
+    
+    
+    
+}
+
+
+void Graph::longestpathlength(){
+    
+    pair<int,int> t1,t2;
+    t1 = bfs(0);
+    t2 = bfs(t1.first);
+    cout<<"Longest distance is from "<<t1.first<<" to "<<t2.first<<" of distance "<<t2.second;
+    
+    
+}
+
+int main() {
+    Graph g(10); 
+    g.addEdge(0, 1); 
+    g.addEdge(1, 2); 
+    g.addEdge(2, 3); 
+    g.addEdge(2, 9); 
+    g.addEdge(2, 4); 
+    g.addEdge(4, 5); 
+    g.addEdge(1, 6); 
+    g.addEdge(6, 7); 
+    g.addEdge(6, 8); 
+  
+    g.longestpathlength(); 
+    return 0; 
+}

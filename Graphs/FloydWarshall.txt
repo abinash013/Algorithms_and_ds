@@ -1,0 +1,63 @@
+// C++ program to find if there is a 
+// path between two vertices in a 
+// directed graph using Dynamic Programming 
+//Source GeeksForGeeks
+#include <bits/stdc++.h> 
+using namespace std; 
+#define X 6 
+#define Z 2 
+
+// function to find if there is a 
+// path between two vertices in a 
+// directed graph 
+bool existPath(int V, int edges[X][Z], 
+			int u, int v) 
+{ 
+	// dp matrix 
+	bool mat[V][V]; 
+	memset(mat, false, sizeof(mat)); 
+
+	// set dp[i][j]=true if there is 
+	// edge between i to j 
+	for (int i = 0; i < X; i++) 
+		mat[edges[i][0]][edges[i][1]] = true; 
+
+	// check for all intermediate vertex 
+	for (int k = 0; k < V; k++) { 
+		for (int i = 0; i < V; i++) { 
+			for (int j = 0; j < V; j++) { 
+
+				mat[i][j] = mat[i][j] 
+							|| mat[i][k] 
+								&& mat[k][j]; 
+			} 
+		} 
+	} 
+
+	// if vertex is invalid 
+	if (u >= V || v >= V) { 
+		return false; 
+	} 
+
+	// if there is a path 
+	if (mat[u][v]) 
+		return true; 
+	return false; 
+} 
+
+// Driver function 
+int main() 
+{ 
+	int V = 4; 
+	int edges[X][Z] 
+		= { { 0, 2 }, { 0, 1 }, 
+			{ 1, 2 }, { 2, 3 }, 
+			{ 2, 0 }, { 3, 3 } }; 
+	int u = 1, v = 3; 
+
+	if (existPath(V, edges, u, v)) 
+		cout << "Yes\n"; 
+	else
+		cout << "No\n"; 
+	return 0; 
+} 

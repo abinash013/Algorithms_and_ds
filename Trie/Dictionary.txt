@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+
+struct Trie{
+    string meaning;
+    bool isLeaf;
+    unordered_map <char,Trie*> map;
+};
+
+Trie* getnode(){
+    Trie* nnode = new Trie;
+    nnode->isLeaf = false;
+    return nnode;
+}
+
+void insert(Trie* root, string s, int index, string meaning){
+    if(index > s.length() - 1){
+//Even when string is "", this block is true and sets root to true, which is true;
+        root->isLeaf = true;
+        root->meaning = meaning;
+        return;
+    }
+    if(root->map.find(s[index]) == root->map.end()){
+//map.end() == map.find(key) when specific key is not in the map
+//So we use that to create a new node for that char
+        Trie* temp = getnode();
+        root->map[s[index]] = temp;
+    }
+    insert(root->map[s[index]],s,index + 1, meaning);
+
+    
+}
+
+string getMeaning(Trie* root, string s){
+    
+    if(root == NULL){
+        return "";
+    }
+
+    Trie* temp = root;
+    for(int i = 0; i < s.length(); i++) {
+        
+        temp = temp->map[s[i]];
+        if(temp == NULL){
+            return "";
+        }
+        
+    }
+    if(!temp->isLeaf){
+        return "";
+    }
+
+    return temp->meaning;
+}
+
+int main(){
+    
+    Trie* root = getnode();
+    insert(root, "language",0, "the method of human communication"); 
+    insert(root, "computer",0, "A computer is a machine that can be \
+    instructed to carry out sequences of arithmetic or \ 
+logical operations automatically via computer programming"); 
+    insert(root, "map",0, "a diagrammatic representation \ 
+of an area"); 
+    insert(root, "book",0, "a written or printed work \ 
+consisting of pages glued or sewn together along one \ 
+side and bound in covers."); 
+    insert(root, "science",0, "the intellectual and \ 
+practical activity encompassing the systematic study \ 
+of the structure and behaviour of the physical and \ 
+natural world through observation and experiment."); 
+   cout << getMeaning(root, "science"); 
+    
+    
+    
+    
+    
+    
+    return 0;
+}

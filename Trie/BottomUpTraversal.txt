@@ -1,0 +1,87 @@
+/*
+    
+Input :
+                                          root
+                                         /    \    
+                                         a     t     
+                                         |     |     
+                                         n     h     
+                                         | \   |   
+                                         s  y  e     
+                                         |     |  \ 
+                                         w     i   r
+                                         |     |   |
+                                         e     r   e
+                                         |        
+                                         r        
+Output : r, e, w, s, y, n, a, r, i, e, r, e, h, t  
+
+
+
+
+
+
+*/
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+#define ALPHABET_SIZE 26
+
+struct Trie{
+    bool isLeaf;
+    Trie* children[ALPHABET_SIZE];
+};
+
+Trie* getnode(){
+    Trie* nnode = new Trie;
+    nnode->isLeaf = false;
+    for(int i = 0; i < ALPHABET_SIZE; i++){
+        nnode->children[i] = NULL;
+    }
+    return nnode;
+}
+
+void insert(Trie* root, string s){
+    Trie* temp = root;
+    for(int i = 0; i < s.length(); i++){
+        int index = s[i] - 'a';
+        if(temp->children[index] == NULL){
+            temp->children[index] = getnode();
+        }
+        temp = temp->children[index];
+    }
+    temp->isLeaf = true;
+}
+
+void dfs(Trie* root){
+    
+    if(root == NULL){
+        return;
+    }
+    for(int i = 0; i < ALPHABET_SIZE; i++){
+        if(root->children[i]){
+            dfs(root->children[i]);
+            char ch = (i + 97); 
+            cout << ch << ", ";
+        }
+    }
+    
+    
+}
+
+int main() 
+{ 
+    Trie* root = getnode(); 
+      
+    // Function to insert a string 
+    insert(root, "thier");  
+    insert(root, "there"); 
+    insert(root, "answer"); 
+    insert(root, "any"); 
+      
+      
+    // Function call for printing a pattern 
+    dfs(root); 
+  
+    return 0; 
+} 

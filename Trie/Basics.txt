@@ -1,0 +1,67 @@
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ALPHABET_SIZE 26
+struct TrieNode{
+    TrieNode* children[ALPHABET_SIZE];
+    bool isEnd;
+};
+TrieNode* getNode()
+{
+    TrieNode* nnode = new TrieNode;
+    nnode->isEnd = false;
+    for(int i = 0; i< ALPHABET_SIZE; i++){
+        nnode->children[i] = NULL;
+    }
+    return nnode;
+}
+
+void insert(TrieNode* root,string s){
+    
+    TrieNode* temp = root;
+    for(int i = 0;i<s.length();i++){
+        int index = s[i] - 'a';
+        if(!temp->children[index]){
+            temp->children[index] = getNode();
+        }
+        temp = temp->children[index];
+    }
+    temp->isEnd = true;
+}
+
+bool search(TrieNode* root, string s){
+    
+     TrieNode* temp = root;
+     for(int i = 0;i < s.length();i++){
+         int index = s[i] - 'a';
+         if(!temp->children[index]){
+             return false;
+         }
+         temp = temp->children[index];
+     }
+     return (temp!=NULL and temp->isEnd);
+}
+
+
+int main() {
+	//code
+	int T;
+	cin>>T;
+	TrieNode* root = getNode();
+	while(T--){
+	    
+	    int n;
+	    cin>>n;
+	    string s[n],x;
+	    for(int i = 0;i<n;i++){
+	        cin>>s[i];
+	        insert(root,s[i]);
+	    }
+	    cin>>x;
+	    cout<<search(root,x)<<endl;
+	    
+	    
+	}
+	return 0;
+}
