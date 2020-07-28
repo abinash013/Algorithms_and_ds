@@ -1,0 +1,36 @@
+/*
+Given a Linked List Representation of Complete Binary Tree. The task is to construct the Binary tree.
+Note : The complete binary tree is represented as a linked list in a way where if
+ root node is stored at position i, its left, and right children are stored at 
+position 2*i+1, 2*i+2 respectively.
+
+*/
+void constructTree(TreeNode *&root,int x){
+    if(root == NULL){
+        root  = new TreeNode(x);
+    }
+    if(x >= root->data){
+        constructTree(root->right,x);
+    }
+    constructTree(root->left,x);
+}
+/*You are required to complete this method*/
+
+void convert(Node *head, TreeNode *&root) {
+    // Your code here
+    vector<TreeNode* > v;
+    while(head != NULL){
+        
+        v.push_back(new TreeNode(head->data));
+        head = head->next;
+    }
+    for(int i = 0;i < v.size()/2; i++){
+        if((2*i+1) < v.size()){
+            v[i]->left = v[2*i+1];
+        }
+        if(2*i+2 < v.size()){
+            v[i]->right = v[2*i+2];
+        }
+    }
+    root = v[0];
+}

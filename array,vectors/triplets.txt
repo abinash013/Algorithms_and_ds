@@ -1,0 +1,52 @@
+/*
+
+Given an array of integers. Check whether it contains a triplet that sums up to zero. 
+
+Input:
+The first line of input contains an integer T, denoting the number of test cases. Then T test cases follow. The first line of each test case contains an integer N, denoting the number of elements in array. The second line of each test case contains N space separated values of the array.
+
+Output:
+For each test case, output will be 1 if triplet exists else 0.
+
+Input:
+2
+5
+0 -1 2 -3 1
+3
+1 2 3
+Output:
+1
+0
+
+Explanation:
+Testcase 1: 0, -1 and 1 forms a triplet with sum equal to 0.
+Testcase 2: No triplet exists which sum to 0.
+
+
+
+
+*/
+bool findTriplets(int arr[], int n)
+{ 
+    //Your code here
+    int sum = 0;
+    sort(arr,arr+n);
+    for(int i = 0; i < n-2; i++){
+        
+        int j = i + 1;
+        int k = n - 1;
+        while(j < k){
+            sum = arr[i] + arr[j] + arr[k];
+            if(sum == 0){
+                return true;
+            }
+            if(sum > 0){
+                --k;
+            }
+            if(sum < 0){
+                ++j;
+            }
+        }
+    }
+    return false;
+}
